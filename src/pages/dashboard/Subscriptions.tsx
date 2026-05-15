@@ -1,37 +1,47 @@
 import { Link } from 'react-router-dom'
-import { ShoppingBag } from 'lucide-react'
-import { Card, CardContent } from '@/components/ui/card'
+import { Package } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import ScrollReveal from '@/animations/ScrollReveal'
+
+const Card = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
+  <div className={`bg-[#111] border border-white/[0.07] ${className}`}>{children}</div>
+)
 
 export default function Subscriptions() {
   return (
     <div className="space-y-8">
       <ScrollReveal>
         <div>
-          <h1 className="text-3xl font-bold text-white mb-2">Subscriptions</h1>
-          <p className="text-gray-400 text-sm">Your purchased bot subscriptions.</p>
+          <h2 className="text-xl font-semibold text-white mb-1">Subscriptions</h2>
+          <p className="text-white/30 text-sm">Your active and expired indicator subscriptions.</p>
         </div>
       </ScrollReveal>
 
       <Tabs defaultValue="active" className="w-full">
-        <TabsList className="glass-card border-0">
-          <TabsTrigger value="active" className="text-cyber-blue">Active</TabsTrigger>
-          <TabsTrigger value="expired" className="text-gray-500">Expired</TabsTrigger>
+        <TabsList className="bg-white/[0.04] border border-white/[0.07] rounded-none h-10">
+          <TabsTrigger value="active" className="rounded-none text-xs tracking-wide data-[state=active]:bg-white/[0.08] data-[state=active]:text-white text-white/40">
+            Active
+          </TabsTrigger>
+          <TabsTrigger value="expired" className="rounded-none text-xs tracking-wide data-[state=active]:bg-white/[0.08] data-[state=active]:text-white text-white/25">
+            Expired
+          </TabsTrigger>
         </TabsList>
       </Tabs>
 
       <ScrollReveal>
-        <Card className="glass-card border-0">
-          <CardContent className="p-12 text-center space-y-4">
-            <ShoppingBag className="w-12 h-12 text-gray-600 mx-auto" />
-            <p className="text-gray-500">No subscriptions yet</p>
-            <p className="text-sm text-gray-600">Purchase a bot from the marketplace to get started.</p>
-            <Link to="/dashboard/marketplace">
-              <Button variant="outline" className="glass-card text-cyber-blue">Browse Marketplace</Button>
-            </Link>
-          </CardContent>
+        <Card className="p-16 text-center space-y-5">
+          <Package className="w-8 h-8 text-white/10 mx-auto" />
+          <p className="text-white/30 text-sm">No subscriptions yet.</p>
+          <p className="text-white/20 text-xs">Purchase an indicator from the marketplace to get started.</p>
+          <Link to="/dashboard/marketplace">
+            <Button
+              variant="outline"
+              className="border-white/[0.08] bg-transparent text-white/40 hover:text-white hover:border-white/20 rounded-none h-9 text-xs tracking-widest uppercase px-6 mt-2"
+            >
+              Browse Marketplace
+            </Button>
+          </Link>
         </Card>
       </ScrollReveal>
     </div>

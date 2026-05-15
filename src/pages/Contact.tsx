@@ -1,67 +1,87 @@
+import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-import { MessageCircle, Mail, Clock, Send } from 'lucide-react'
+import { Label } from '@/components/ui/label'
 import ScrollReveal from '@/animations/ScrollReveal'
-
-const channels = [
-  { icon: MessageCircle, title: 'Telegram (Fastest)', desc: 'For urgent issues and quick questions.', action: 'Open Telegram →' },
-  { icon: Mail, title: 'Email Support', desc: 'For detailed questions or billing issues.', action: 'support@edgepro.online →' },
-  { icon: Clock, title: 'Response Time', desc: 'We aim to reply within 4–24 hours on business days.' },
-]
+import { contactContent } from '@/data/contact'
 
 export default function Contact() {
   return (
-    <div className="pt-32 pb-24">
-      <div className="container mx-auto px-6 max-w-4xl">
-        <ScrollReveal>
-          <div className="text-center mb-16 space-y-4">
-            <h1 className="text-4xl md:text-5xl font-bold">
-              <span className="bg-gradient-to-r from-cyber-blue to-cyber-purple bg-clip-text text-transparent">Get in Touch</span>
-            </h1>
-            <p className="text-gray-400">We typically respond within a few hours. For urgent issues, Telegram is fastest.</p>
+    <div className="pt-36 pb-32">
+      <div className="container mx-auto px-6 max-w-5xl">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-24"
+        >
+          <span className="text-[10px] tracking-[0.3em] uppercase text-white/25 mb-5 block">
+            Support
+          </span>
+          <div>
+            {contactContent.headline.map((line, i) => (
+              <h1
+                key={i}
+                className={`text-[clamp(48px,7vw,110px)] font-bold tracking-[-0.04em] leading-[0.93] ${
+                  i === 1 ? 'text-white/25' : 'text-white'
+                }`}
+              >
+                {line}
+              </h1>
+            ))}
           </div>
-        </ScrollReveal>
+        </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-6 mb-16">
-          {channels.map((ch) => (
-            <ScrollReveal key={ch.title}>
-              <Card className="glass-card border-0 h-full">
-                <CardContent className="p-6 text-center flex flex-col justify-between h-full">
-                  <div>
-                    <div className="w-12 h-12 rounded-full bg-cyber-blue/10 flex items-center justify-center mx-auto mb-4">
-                      <ch.icon className="w-6 h-6 text-cyber-blue" />
-                    </div>
-                    <h3 className="font-semibold text-white mb-2">{ch.title}</h3>
-                    <p className="text-sm text-gray-400 mb-4">{ch.desc}</p>
-                  </div>
-                  {ch.action && (
-                    <Button variant="link" className="text-cyber-blue font-semibold">{ch.action}</Button>
+        <div className="grid md:grid-cols-2 gap-24">
+          <ScrollReveal>
+            <div className="space-y-10">
+              {contactContent.channels.map((channel) => (
+                <div key={channel.method} className="space-y-2">
+                  <span className="text-[10px] tracking-[0.3em] uppercase text-white/25 block">
+                    {channel.method}
+                  </span>
+                  <a
+                    href={channel.href}
+                    className="text-white font-medium hover:text-white/70 transition-colors block text-lg"
+                  >
+                    {channel.value}
+                  </a>
+                  <p className="text-white/30 text-sm">{channel.note}</p>
+                </div>
+              ))}
+            </div>
+          </ScrollReveal>
+
+          <ScrollReveal delay={0.1}>
+            <form className="space-y-5">
+              {contactContent.form.fields.map((field) => (
+                <div key={field.name} className="space-y-2">
+                  <Label className="text-[10px] tracking-[0.2em] uppercase text-white/30">
+                    {field.label}
+                  </Label>
+                  {field.type === 'textarea' ? (
+                    <Textarea
+                      placeholder={field.placeholder}
+                      rows={5}
+                      className="bg-white/[0.03] border-white/[0.08] text-white placeholder:text-white/20 rounded-none resize-none focus-visible:ring-0 focus-visible:border-white/20"
+                    />
+                  ) : (
+                    <Input
+                      type={field.type}
+                      placeholder={field.placeholder}
+                      className="bg-white/[0.03] border-white/[0.08] text-white placeholder:text-white/20 rounded-none h-11 focus-visible:ring-0 focus-visible:border-white/20"
+                    />
                   )}
-                </CardContent>
-              </Card>
-            </ScrollReveal>
-          ))}
-        </div>
-
-        <ScrollReveal>
-          <Card className="glass-card border-0 max-w-2xl mx-auto">
-            <CardContent className="p-8 space-y-6">
-              <h2 className="text-xl font-bold text-white">Send a Message</h2>
-              <div className="space-y-5">
-                <Input placeholder="Your Name" className="bg-cyber-dark border-cyber-blue/20 text-white placeholder:text-gray-600" />
-                <Input type="email" placeholder="Email Address" className="bg-cyber-dark border-cyber-blue/20 text-white placeholder:text-gray-600" />
-                <Input placeholder="Subject" className="bg-cyber-dark border-cyber-blue/20 text-white placeholder:text-gray-600" />
-                <Textarea placeholder="Describe your issue or question in detail..." rows={5} className="bg-cyber-dark border-cyber-blue/20 text-white placeholder:text-gray-600 resize-none" />
-              </div>
-              <Button className="w-full gradient-border bg-cyber-blue/20 text-white gap-2">
-                <Send className="w-4 h-4" />
-                Send Message
+                </div>
+              ))}
+              <Button className="bg-white text-black hover:bg-white/90 text-[11px] tracking-[0.2em] uppercase font-semibold h-11 rounded-none px-8 mt-2">
+                {contactContent.form.cta}
               </Button>
-            </CardContent>
-          </Card>
-        </ScrollReveal>
+              <p className="text-white/20 text-xs">{contactContent.form.note}</p>
+            </form>
+          </ScrollReveal>
+        </div>
       </div>
     </div>
   )

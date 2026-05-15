@@ -1,53 +1,66 @@
-import { Card, CardContent } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
+import { motion } from 'framer-motion'
 import { Play } from 'lucide-react'
+import { liveDemoContent } from '@/data/liveDemo'
 
 export default function LiveDemo() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      <Card className="absolute inset-0 z-0 border-0 rounded-none bg-transparent" data-react-bits="Beams" />
-
-      <Card className="relative z-10 container mx-auto px-6 border-0 bg-transparent">
-        <CardContent className="p-0 max-w-6xl mx-auto space-y-16">
-          <Card className="bg-transparent border-0 text-center space-y-4">
-            <CardContent className="p-0 text-7xl md:text-8xl font-black text-white leading-tight">
-              Real footage.
-            </CardContent>
-            <CardContent className="p-0 text-7xl md:text-8xl font-black leading-tight">
-              <Badge variant="outline" className="border-0 p-0 text-inherit bg-gradient-to-r from-cyber-blue to-cyber-purple bg-clip-text text-transparent">
-                No simulations.
-              </Badge>
-            </CardContent>
-          </Card>
-
-          <Card className="grid md:grid-cols-2 gap-8 bg-transparent border-0">
-            {[
-              { pair: 'BTCUSDT', tf: '1-Hour', desc: 'Bias zones and flip markers on Bitcoin as the market shifts character.' },
-              { pair: 'XAUUSD', tf: '15-Min', desc: 'Clean directional background shifting as Gold moves between bias environments.' },
-            ].map((demo) => (
-              <Card key={demo.pair} className="glass-card border-0 overflow-hidden group cursor-pointer">
-                <Card className="aspect-video bg-black/40 flex items-center justify-center relative border-0 rounded-none">
-                  <Badge variant="outline" className="absolute top-4 left-4 border-red-500/50 text-red-400 gap-2 font-mono text-xs">
-                    <Card className="w-2 h-2 rounded-full bg-red-500 animate-pulse border-0" />
-                    REC
-                  </Badge>
-                  <Card className="w-20 h-20 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-white/10 group-hover:scale-110 transition-all duration-500 border-0">
-                    <Play className="w-10 h-10 text-white fill-white" />
-                  </Card>
-                  <Card className="absolute bottom-4 left-4 bg-transparent border-0">
-                    <CardContent className="p-0 text-sm text-gray-500 font-mono">
-                      {demo.pair} · {demo.tf}
-                    </CardContent>
-                  </Card>
-                </Card>
-                <CardContent className="p-6">
-                  <CardContent className="p-0 text-gray-400 text-sm leading-relaxed">{demo.desc}</CardContent>
-                </CardContent>
-              </Card>
+    <section className="py-32 border-b border-white/[0.06]">
+      <div className="container mx-auto px-6 max-w-6xl">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-10%' }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-20"
+        >
+          <span className="text-[10px] tracking-[0.3em] uppercase text-white/25 mb-5 block">
+            Live Charts
+          </span>
+          <h2 className="text-[clamp(40px,6vw,88px)] font-bold tracking-[-0.04em] text-white leading-[0.95]">
+            {liveDemoContent.tagline.split('. ').map((part, i) => (
+              <span key={i} className={i === 1 ? 'text-white/25' : ''}>
+                {part}{i === 0 ? '.' : ''}
+                {i === 0 && <br />}
+              </span>
             ))}
-          </Card>
-        </CardContent>
-      </Card>
+          </h2>
+        </motion.div>
+
+        <div className="grid md:grid-cols-2 gap-px bg-white/[0.06]">
+          {liveDemoContent.demos.map((demo, i) => (
+            <motion.div
+              key={demo.pair}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-8%' }}
+              transition={{ duration: 0.7, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="bg-[#080808] group cursor-pointer"
+            >
+              <div className="aspect-video bg-white/[0.02] flex items-center justify-center relative border-b border-white/[0.06]">
+                <div className="absolute top-4 left-4 flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-white/30 animate-pulse" />
+                  <span className="text-[9px] tracking-[0.25em] uppercase text-white/25">REC</span>
+                </div>
+                <motion.div
+                  whileHover={{ scale: 1.08 }}
+                  transition={{ duration: 0.3 }}
+                  className="w-14 h-14 border border-white/15 rounded-full flex items-center justify-center"
+                >
+                  <Play className="w-5 h-5 text-white/50 fill-white/50" />
+                </motion.div>
+                <div className="absolute bottom-4 left-4">
+                  <span className="text-[10px] tracking-[0.2em] uppercase text-white/25">
+                    {demo.pair} · {demo.timeframe}
+                  </span>
+                </div>
+              </div>
+              <div className="p-8">
+                <p className="text-white/35 text-sm leading-relaxed">{demo.description}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
     </section>
   )
 }

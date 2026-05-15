@@ -1,31 +1,33 @@
-import { Card, CardContent } from '@/components/ui/card'
-
-const stats = [
-  { value: '1,247', label: 'Active Traders' },
-  { value: '94.2%', label: 'Directional Accuracy' },
-  { value: '200+', label: 'Supported Markets' },
-  { value: '<24h', label: 'Avg Access Time' },
-]
+import { useRef } from 'react'
+import { motion, useInView } from 'framer-motion'
+import { stats } from '@/data/stats'
 
 export default function Stats() {
-  return (
-    <section className="relative min-h-[50vh] flex items-center justify-center overflow-hidden">
-      <Card className="absolute inset-0 z-0 border-0 rounded-none bg-transparent" data-react-bits="DotField" />
+  const ref = useRef<HTMLElement>(null)
+  const isInView = useInView(ref, { once: true, margin: '-15%' })
 
-      <Card className="relative z-10 container mx-auto px-6 border-0 bg-transparent">
-        <CardContent className="p-0">
-          <Card className="grid grid-cols-2 md:grid-cols-4 gap-16 max-w-4xl mx-auto bg-transparent border-0">
-            {stats.map((stat) => (
-              <Card key={stat.label} className="bg-transparent border-0 text-center space-y-3">
-                <CardContent className="p-0 text-6xl md:text-7xl font-black bg-gradient-to-b from-white to-gray-400 bg-clip-text text-transparent">
-                  {stat.value}
-                </CardContent>
-                <CardContent className="p-0 text-sm text-gray-500 tracking-widest uppercase">{stat.label}</CardContent>
-              </Card>
-            ))}
-          </Card>
-        </CardContent>
-      </Card>
+  return (
+    <section ref={ref} className="border-b border-white/[0.06]">
+      <div className="container mx-auto px-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-y lg:divide-y-0 divide-white/[0.06]">
+          {stats.map((stat, i) => (
+            <motion.div
+              key={stat.label}
+              initial={{ opacity: 0, y: 30 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.7, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+              className="px-8 py-16"
+            >
+              <div className="text-[clamp(40px,5vw,72px)] font-bold tracking-[-0.03em] text-white leading-none mb-3">
+                {stat.value}
+              </div>
+              <div className="text-[10px] tracking-[0.25em] uppercase text-white/30">
+                {stat.label}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
     </section>
   )
 }

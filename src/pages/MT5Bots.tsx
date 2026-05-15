@@ -1,99 +1,95 @@
+import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
+import { Bot, Shield, Cpu, Download, type LucideIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
-import { Badge } from '@/components/ui/badge'
-import { Bot, Shield, Cpu, Download, ArrowRight, Zap } from 'lucide-react'
 import ScrollReveal from '@/animations/ScrollReveal'
+import { mt5BotsContent } from '@/data/mt5bots'
 
-const features = [
-  { icon: Bot, title: 'Fully Automated Execution', description: 'Bots trade 24/7 without any manual input — enter, manage, and exit positions automatically.' },
-  { icon: Shield, title: 'Built-in Risk Management', description: 'Dynamic stop-loss, position sizing, and drawdown limits baked into every strategy.' },
-  { icon: Cpu, title: 'DART-Powered Strategies', description: 'Each bot is backed by the same multi-timeframe bias engine that powers DART Bias Engine v3.' },
-  { icon: Download, title: 'Instant EX5 Delivery', description: 'Once live, your personalised EX5 license file is generated and delivered in seconds after purchase.' },
-]
-
-const steps = [
-  { step: '01', title: 'Purchase a Bot', description: 'Select a strategy, choose your plan, and fund with your wallet balance.' },
-  { step: '02', title: 'Provide MT5 Details', description: 'Enter your broker server, MT5 account number, and password securely.' },
-  { step: '03', title: 'Receive Your EX5', description: 'Your personalised EX5 license file is generated and ready to install instantly.' },
-]
+const iconMap: Record<string, LucideIcon> = { Bot, Shield, Cpu, Download }
 
 export default function MT5Bots() {
   return (
-    <div className="pt-32 pb-24">
-      <div className="container mx-auto px-6">
-        <ScrollReveal>
-          <div className="text-center max-w-3xl mx-auto mb-20 space-y-6">
-            <Badge variant="outline" className="border-cyber-yellow text-cyber-yellow gap-2 px-4 py-2">
-              <Zap className="w-4 h-4" />
-              Launching Soon
-            </Badge>
-            <h1 className="text-5xl md:text-6xl font-bold">
-              <span className="bg-gradient-to-r from-cyber-blue to-cyber-purple bg-clip-text text-transparent">MT5 Algo Bots</span>
-            </h1>
-            <p className="text-xl text-gray-400 leading-relaxed">
-              Fully automated MetaTrader 5 Expert Advisors powered by the DART Bias Engine. Zero manual intervention — deployed directly to your MT5 account as a personalised EX5 file.
-            </p>
+    <div className="pt-36 pb-32">
+      <div className="container mx-auto px-6 max-w-6xl">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-24"
+        >
+          <span className="inline-block text-[10px] tracking-[0.35em] uppercase text-white/30 border border-white/[0.08] px-5 py-2 mb-10">
+            {mt5BotsContent.badge}
+          </span>
+          <div>
+            {mt5BotsContent.headline.map((line, i) => (
+              <h1
+                key={i}
+                className={`text-[clamp(48px,7vw,110px)] font-bold tracking-[-0.04em] leading-[0.93] ${
+                  i === 1 ? 'text-white/25' : 'text-white'
+                }`}
+              >
+                {line}
+              </h1>
+            ))}
+          </div>
+          <p className="text-white/35 text-lg max-w-md leading-relaxed mt-8">
+            {mt5BotsContent.description}
+          </p>
+        </motion.div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-px bg-white/[0.06] mb-32">
+          {mt5BotsContent.features.map((feature, i) => {
+            const Icon = iconMap[feature.icon]
+            return (
+              <ScrollReveal key={feature.title} delay={i * 0.08}>
+                <div className="bg-[#080808] p-8 space-y-5 h-full">
+                  {Icon && <Icon className="w-5 h-5 text-white/30" />}
+                  <h3 className="text-white font-semibold text-sm">{feature.title}</h3>
+                  <p className="text-white/30 text-sm leading-relaxed">{feature.description}</p>
+                </div>
+              </ScrollReveal>
+            )
+          })}
+        </div>
+
+        <ScrollReveal className="mb-24">
+          <span className="text-[10px] tracking-[0.3em] uppercase text-white/25 mb-6 block">
+            How It Works
+          </span>
+          <div className="grid md:grid-cols-3 gap-px bg-white/[0.06]">
+            {mt5BotsContent.steps.map((step, i) => (
+              <div key={step.number} className="bg-[#080808] p-10 space-y-5">
+                <span className="text-[clamp(40px,4vw,60px)] font-bold tracking-tight text-white/[0.06] leading-none block">
+                  {step.number}
+                </span>
+                <h3 className="text-white font-semibold text-sm">{step.title}</h3>
+                <p className="text-white/30 text-sm leading-relaxed">{step.description}</p>
+              </div>
+            ))}
           </div>
         </ScrollReveal>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-24">
-          {features.map((feature) => (
-            <ScrollReveal key={feature.title}>
-              <Card className="glass-card border-0 h-full">
-                <CardContent className="p-6">
-                  <div className="w-12 h-12 rounded-lg bg-cyber-blue/10 flex items-center justify-center mb-4">
-                    <feature.icon className="w-6 h-6 text-cyber-blue" />
-                  </div>
-                  <h3 className="font-semibold text-white mb-2">{feature.title}</h3>
-                  <p className="text-sm text-gray-400 leading-relaxed">{feature.description}</p>
-                </CardContent>
-              </Card>
-            </ScrollReveal>
-          ))}
-        </div>
-
         <ScrollReveal>
-          <h2 className="text-3xl font-bold text-white text-center mb-12">How bot delivery will work</h2>
-        </ScrollReveal>
-
-        <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto mb-20">
-          {steps.map((item) => (
-            <ScrollReveal key={item.step}>
-              <Card className="glass-card border-0 text-center">
-                <CardContent className="p-6">
-                  <div className="w-16 h-16 rounded-full glass-card flex items-center justify-center mx-auto mb-4">
-                    <span className="text-2xl font-bold bg-gradient-to-r from-cyber-blue to-cyber-purple bg-clip-text text-transparent">{item.step}</span>
-                  </div>
-                  <h3 className="font-semibold text-white mb-2">{item.title}</h3>
-                  <p className="text-sm text-gray-400">{item.description}</p>
-                </CardContent>
-              </Card>
-            </ScrollReveal>
-          ))}
-        </div>
-
-        <ScrollReveal>
-          <Card className="glass-card border-0 max-w-md mx-auto">
-            <CardContent className="p-8 text-center space-y-6">
-              <div>
-                <h3 className="text-xl font-bold text-white mb-2">Don't miss the launch.</h3>
-                <p className="text-gray-400 text-sm">Join the waitlist and be first to get access when MT5 bots go live.</p>
-              </div>
-              <Input type="email" placeholder="your@email.com" className="bg-cyber-dark border-cyber-blue/20 text-white placeholder:text-gray-600" />
-              <Button className="w-full gradient-border bg-cyber-blue/20 text-white gap-2">
-                Join Waitlist
-                <ArrowRight className="w-4 h-4" />
+          <div className="max-w-sm space-y-6">
+            <div className="space-y-2">
+              <h3 className="text-white font-semibold text-lg">{mt5BotsContent.waitlist.headline}</h3>
+              <p className="text-white/30 text-sm">{mt5BotsContent.waitlist.description}</p>
+            </div>
+            <div className="flex gap-2">
+              <Input
+                type="email"
+                placeholder="your@email.com"
+                className="bg-white/[0.03] border-white/[0.08] text-white placeholder:text-white/20 rounded-none h-11 focus-visible:ring-0 focus-visible:border-white/20"
+              />
+              <Button className="bg-white text-black hover:bg-white/90 text-[10px] tracking-[0.2em] uppercase font-semibold px-6 h-11 rounded-none shrink-0">
+                {mt5BotsContent.waitlist.cta}
               </Button>
-              <p className="text-xs text-gray-600">No spam. We'll only email when bots go live.</p>
-            </CardContent>
-          </Card>
-        </ScrollReveal>
-
-        <ScrollReveal>
-          <div className="text-center mt-12 space-y-4">
-            <p className="text-gray-400 text-sm">In the meantime —</p>
-            <Button variant="link" className="text-cyber-blue font-semibold">Try DART Bias Engine Now →</Button>
+            </div>
+            <p className="text-white/20 text-xs">{mt5BotsContent.waitlist.note}</p>
+            <Link to="/" className="text-white/30 hover:text-white text-xs tracking-wide transition-colors block">
+              ← Back to DART Bias Engine
+            </Link>
           </div>
         </ScrollReveal>
       </div>

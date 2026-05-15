@@ -1,7 +1,5 @@
 import { Copy, RefreshCw } from 'lucide-react'
-import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Separator } from '@/components/ui/separator'
 import ScrollReveal from '@/animations/ScrollReveal'
 
 const networks = [
@@ -10,80 +8,78 @@ const networks = [
   { name: 'Polygon', standard: 'POL', accepts: 'USDT, USDC', address: '0x...' },
 ]
 
+const Card = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
+  <div className={`bg-[#111] border border-white/[0.07] ${className}`}>{children}</div>
+)
+
 export default function Wallet() {
   return (
     <div className="space-y-8">
       <ScrollReveal>
         <div>
-          <h1 className="text-3xl font-bold text-white mb-2">Wallet</h1>
-          <p className="text-gray-400 text-sm">Deposit funds and manage your balance.</p>
+          <h2 className="text-xl font-semibold text-white mb-1">Wallet</h2>
+          <p className="text-white/30 text-sm">Deposit funds and manage your balance.</p>
         </div>
       </ScrollReveal>
 
       <ScrollReveal>
-        <Card className="glass-card border-0">
-          <CardContent className="p-8 space-y-4">
-            <p className="text-sm text-gray-400">Available Balance</p>
-            <h2 className="text-4xl font-bold text-white">0.00 USDT</h2>
-            <p className="text-xs text-gray-500">Credited in USDT equivalent</p>
-            <Button variant="outline" className="glass-card text-cyber-blue">Add Funds</Button>
-          </CardContent>
+        <Card className="p-8 space-y-4">
+          <p className="text-[10px] tracking-[0.25em] uppercase text-white/25">Available Balance</p>
+          <div className="text-[clamp(32px,4vw,56px)] font-bold tracking-[-0.03em] text-white leading-none">
+            0.00 <span className="text-white/30 text-2xl font-medium">USDT</span>
+          </div>
+          <p className="text-white/20 text-xs">Credited in USDT equivalent after blockchain confirmation.</p>
         </Card>
       </ScrollReveal>
 
-      <ScrollReveal>
+      <ScrollReveal delay={0.05}>
         <div className="space-y-4">
-          <p className="text-sm text-gray-400">Each network has one permanent address — send USDT or USDC to any of them.</p>
-          <div className="grid md:grid-cols-3 gap-4">
+          <p className="text-white/30 text-sm">
+            Each network has a permanent deposit address. Send USDT or USDC to any of them.
+          </p>
+          <div className="grid md:grid-cols-3 gap-3">
             {networks.map((net) => (
-              <Card key={net.name} className="glass-card border-0">
-                <CardContent className="p-5 space-y-3">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h3 className="font-semibold text-white text-sm">{net.name}</h3>
-                      <p className="text-xs text-gray-500">{net.standard}</p>
-                    </div>
-                    <Button variant="outline" size="sm" className="text-[10px]">QR</Button>
-                  </div>
-                  <p className="text-xs text-gray-500">Accepts: {net.accepts}</p>
-                  <div className="flex items-center gap-2 bg-cyber-dark rounded-lg px-3 py-2">
-                    <span className="text-xs text-gray-400 truncate flex-1">{net.address}</span>
-                    <Button variant="ghost" size="icon" className="h-6 w-6">
-                      <Copy className="w-3 h-3 text-gray-500 hover:text-cyber-blue" />
-                    </Button>
-                  </div>
-                </CardContent>
+              <Card key={net.name} className="p-5 space-y-4 hover:border-white/15 transition-colors duration-300">
+                <div>
+                  <h3 className="text-white font-medium text-sm">{net.name}</h3>
+                  <p className="text-white/30 text-xs">{net.standard} · {net.accepts}</p>
+                </div>
+                <div className="flex items-center gap-2 bg-white/[0.03] border border-white/[0.06] px-3 py-2">
+                  <span className="text-xs text-white/25 truncate flex-1 font-mono">{net.address}</span>
+                  <button className="text-white/20 hover:text-white/50 transition-colors">
+                    <Copy className="w-3 h-3" />
+                  </button>
+                </div>
               </Card>
             ))}
           </div>
-          <p className="text-xs text-gray-600">These addresses are permanent and unique to your account. Deposits are credited automatically after blockchain confirmation.</p>
+          <p className="text-white/15 text-xs">
+            Addresses are permanent and unique to your account.
+          </p>
         </div>
       </ScrollReveal>
 
-      <ScrollReveal>
-        <Card className="glass-card border-0">
-          <CardContent className="p-6 space-y-4">
-            <div className="flex items-center justify-between">
-              <h2 className="font-semibold text-white">Deposit History</h2>
-              <Button variant="ghost" size="icon">
-                <RefreshCw className="w-4 h-4 text-gray-500 hover:text-cyber-blue" />
-              </Button>
-            </div>
-            <p className="text-sm text-gray-500">No deposits yet.</p>
-            <p className="text-xs text-gray-600">Send USDT or USDC to any of your deposit addresses above.</p>
-          </CardContent>
+      <ScrollReveal delay={0.08}>
+        <Card className="p-6 space-y-4">
+          <div className="flex items-center justify-between">
+            <h3 className="text-white/60 text-sm font-medium">Deposit History</h3>
+            <button className="text-white/20 hover:text-white/40 transition-colors">
+              <RefreshCw className="w-3.5 h-3.5" />
+            </button>
+          </div>
+          <p className="text-white/20 text-sm">No deposits yet.</p>
         </Card>
       </ScrollReveal>
 
-      <ScrollReveal>
-        <Card className="glass-card border-0">
-          <CardContent className="p-6 space-y-4">
-            <div className="flex items-center justify-between">
-              <h2 className="font-semibold text-white">Transaction History</h2>
-              <Button variant="link" className="text-cyber-blue text-xs">Check for new transactions</Button>
-            </div>
-            <p className="text-sm text-gray-500">No transactions yet.</p>
-          </CardContent>
+      <ScrollReveal delay={0.1}>
+        <Card className="p-6 space-y-4">
+          <div className="flex items-center justify-between">
+            <h3 className="text-white/60 text-sm font-medium">Transaction History</h3>
+            <Button variant="ghost" className="text-white/25 hover:text-white/50 text-xs h-auto p-0">
+              Refresh
+            </Button>
+          </div>
+          <p className="text-white/20 text-sm">No transactions yet.</p>
         </Card>
       </ScrollReveal>
     </div>

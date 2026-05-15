@@ -1,7 +1,5 @@
 import { Link, useLocation } from 'react-router-dom'
-import { LayoutDashboard, Wallet, Package, Server, ShoppingBag, Cpu } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Separator } from '@/components/ui/separator'
+import { LayoutDashboard, Wallet, Package, Server, ShoppingBag, ArrowLeft } from 'lucide-react'
 
 const links = [
   { to: '/dashboard', icon: LayoutDashboard, label: 'Overview' },
@@ -15,33 +13,43 @@ export default function DashboardSidebar() {
   const location = useLocation()
 
   return (
-    <aside className="w-64 min-h-screen glass-card border-r border-cyber-blue/10 p-6 flex flex-col">
-      <Link to="/" className="flex items-center gap-3 mb-8">
-        <Cpu className="w-7 h-7 text-cyber-blue" />
-        <span className="text-xl font-bold bg-gradient-to-r from-cyber-blue to-cyber-purple bg-clip-text text-transparent">EdgePro</span>
+    <aside className="w-56 min-h-screen bg-[#0a0a0a] border-r border-white/[0.06] p-6 flex flex-col shrink-0">
+      <Link
+        to="/"
+        className="text-white font-bold tracking-[0.22em] text-sm uppercase mb-12 block"
+      >
+        EdgePro
       </Link>
+
       <nav className="flex flex-col gap-1 flex-1">
         {links.map(({ to, icon: Icon, label }) => {
-          const active = location.pathname === to || (to !== '/dashboard' && location.pathname.startsWith(to))
+          const active =
+            location.pathname === to ||
+            (to !== '/dashboard' && location.pathname.startsWith(to))
           return (
-            <Link key={to} to={to}>
-              <Button
-                variant={active ? 'secondary' : 'ghost'}
-                className={`w-full justify-start gap-3 ${active ? 'bg-cyber-blue/10 text-cyber-blue' : 'text-gray-400 hover:text-cyber-blue'}`}
-              >
-                <Icon className="w-5 h-5" />
-                {label}
-              </Button>
+            <Link
+              key={to}
+              to={to}
+              className={`flex items-center gap-3 px-3 py-2.5 text-sm transition-colors duration-200 ${
+                active
+                  ? 'text-white bg-white/[0.06]'
+                  : 'text-white/35 hover:text-white/60'
+              }`}
+            >
+              <Icon className="w-4 h-4 shrink-0" />
+              {label}
             </Link>
           )
         })}
       </nav>
-      <Separator className="bg-cyber-blue/10 my-4" />
-      <Button variant="ghost" className="text-gray-400 hover:text-cyber-blue justify-start gap-3">
-        <Link to="/" className="flex items-center gap-3">
-          ← Back to Site
-        </Link>
-      </Button>
+
+      <Link
+        to="/"
+        className="flex items-center gap-2 text-white/20 hover:text-white/40 transition-colors text-xs tracking-wide"
+      >
+        <ArrowLeft className="w-3 h-3" />
+        Back to site
+      </Link>
     </aside>
   )
 }

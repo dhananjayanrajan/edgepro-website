@@ -1,75 +1,92 @@
-import { Card, CardContent } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
+import { motion } from 'framer-motion'
 import { Check } from 'lucide-react'
-
-const plans = [
-  {
-    name: 'STARTER', price: '49', period: '/mo',
-    features: ['TradingView access', 'Bull/Bear visuals', 'Flip markers & alerts', 'Setup guide', 'Email support'],
-    highlighted: false, cta: 'Start Monthly',
-  },
-  {
-    name: 'PRO', price: '99', period: '/mo',
-    features: ['Everything in Starter', 'Live walkthrough', 'Execution checklist', 'Private support', 'Early tool access'],
-    highlighted: true, cta: 'Get Pro Access',
-  },
-  {
-    name: 'LIFETIME', price: '499', period: 'one-time',
-    features: ['Lifetime DART access', 'All future updates', 'Founder recognition', 'MT5 bot priority', 'VIP support'],
-    highlighted: false, cta: 'Claim Lifetime',
-  },
-]
+import { Button } from '@/components/ui/button'
+import { pricingPlans } from '@/data/pricing'
 
 export default function Pricing() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      <Card className="absolute inset-0 z-0 border-0 rounded-none bg-transparent" data-react-bits="Prism" />
+    <section id="pricing" className="py-32 border-b border-white/[0.06]">
+      <div className="container mx-auto px-6 max-w-6xl">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-10%' }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-20"
+        >
+          <span className="text-[10px] tracking-[0.3em] uppercase text-white/25 mb-5 block">
+            Pricing
+          </span>
+          <h2 className="text-[clamp(40px,6vw,88px)] font-bold tracking-[-0.04em] text-white leading-[0.95]">
+            Transparent.
+            <br />
+            <span className="text-white/25">No surprises.</span>
+          </h2>
+        </motion.div>
 
-      <Card className="relative z-10 container mx-auto px-6 border-0 bg-transparent">
-        <CardContent className="p-0 max-w-5xl mx-auto space-y-16">
-          <Card className="bg-transparent border-0 text-center space-y-4">
-            <CardContent className="p-0 text-7xl md:text-8xl font-black text-white leading-tight">
-              Transparent.
-            </CardContent>
-            <CardContent className="p-0 text-7xl md:text-8xl font-black leading-tight">
-              <Badge variant="outline" className="border-0 p-0 text-inherit bg-gradient-to-r from-cyber-blue to-cyber-purple bg-clip-text text-transparent">
-                No surprises.
-              </Badge>
-            </CardContent>
-          </Card>
+        <div className="grid md:grid-cols-3 gap-px bg-white/[0.06]">
+          {pricingPlans.map((plan, i) => (
+            <motion.div
+              key={plan.name}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-8%' }}
+              transition={{ duration: 0.65, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className={`bg-[#080808] p-10 space-y-8 relative flex flex-col ${
+                plan.highlighted ? 'ring-1 ring-inset ring-white/15' : ''
+              }`}
+            >
+              {plan.highlighted && (
+                <span className="absolute top-0 left-10 -translate-y-1/2 text-[9px] tracking-[0.3em] uppercase text-white/40 bg-[#080808] px-3 py-1 border border-white/15">
+                  Most Popular
+                </span>
+              )}
 
-          <Card className="grid md:grid-cols-3 gap-4 bg-transparent border-0">
-            {plans.map((plan) => (
-              <Card key={plan.name} className={`glass-card border-0 relative p-8 space-y-7 ${plan.highlighted ? 'ring-1 ring-cyber-blue/30' : ''}`}>
-                {plan.highlighted && (
-                  <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-cyber-blue to-cyber-purple text-white px-5 py-1 text-xs font-bold tracking-wider rounded-full">
-                    MOST POPULAR
-                  </Badge>
-                )}
-                <Card className="bg-transparent border-0 space-y-3">
-                  <CardContent className="p-0 text-sm font-bold text-gray-400 tracking-widest">{plan.name}</CardContent>
-                  <Card className="flex items-baseline gap-1 bg-transparent border-0">
-                    <CardContent className="p-0 text-6xl font-black text-white">${plan.price}</CardContent>
-                    <CardContent className="p-0 text-gray-500 text-lg">{plan.period}</CardContent>
-                  </Card>
-                </Card>
-                <Card className="space-y-3 bg-transparent border-0">
-                  {plan.features.map((f) => (
-                    <Card key={f} className="flex items-start gap-3 bg-transparent border-0">
-                      <Check className="w-4 h-4 text-cyber-green mt-1 shrink-0" />
-                      <CardContent className="p-0 text-sm text-gray-400">{f}</CardContent>
-                    </Card>
-                  ))}
-                </Card>
-                <Button className={`w-full rounded-full font-semibold ${plan.highlighted ? 'bg-gradient-to-r from-cyber-blue to-cyber-purple text-white' : 'glass-card text-white hover:bg-white/10'}`}>
-                  {plan.cta}
-                </Button>
-              </Card>
-            ))}
-          </Card>
-        </CardContent>
-      </Card>
+              <div className="space-y-2">
+                <span className="text-[10px] tracking-[0.3em] uppercase text-white/30">
+                  {plan.name}
+                </span>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-[clamp(40px,4vw,60px)] font-bold tracking-[-0.03em] text-white leading-none">
+                    {plan.price}
+                  </span>
+                  <span className="text-white/25 text-sm">{plan.period}</span>
+                </div>
+                <p className="text-white/30 text-xs leading-relaxed pt-1">{plan.description}</p>
+              </div>
+
+              <ul className="space-y-3 flex-1">
+                {plan.features.map((f) => (
+                  <li key={f} className="flex items-start gap-3">
+                    <Check className="w-3.5 h-3.5 text-white/40 mt-0.5 shrink-0" />
+                    <span className="text-white/50 text-sm">{f}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <Button
+                className={`w-full rounded-none h-11 text-[11px] tracking-[0.2em] uppercase font-semibold ${
+                  plan.highlighted
+                    ? 'bg-white text-black hover:bg-white/90'
+                    : 'bg-transparent border border-white/15 text-white/60 hover:border-white/30 hover:text-white'
+                }`}
+              >
+                {plan.cta}
+              </Button>
+            </motion.div>
+          ))}
+        </div>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, delay: 0.3 }}
+          className="text-center text-white/20 text-xs tracking-wide mt-10"
+        >
+          7-day full refund. No questions asked.
+        </motion.p>
+      </div>
     </section>
   )
 }

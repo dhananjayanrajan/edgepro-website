@@ -1,41 +1,54 @@
-import { Card, CardContent } from '@/components/ui/card'
+import { useRef } from 'react'
+import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
-import { ArrowRight, Shield } from 'lucide-react'
+import { ctaContent } from '@/data/cta'
 
 export default function CTASection() {
+  const containerRef = useRef<HTMLDivElement>(null)
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      <Card className="absolute inset-0 z-0 border-0 rounded-none bg-transparent" data-react-bits="Lightning" />
+    <section className="py-40">
+      <div ref={containerRef} className="container mx-auto px-6 max-w-5xl">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-10%' }}
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+          className="space-y-12"
+        >
+          <div>
+            {ctaContent.headline.map((line, i) => (
+              <h2
+                key={i}
+                className={`text-[clamp(48px,8vw,130px)] font-bold tracking-[-0.04em] leading-[0.93] ${
+                  i === 1 ? 'text-white/25' : 'text-white'
+                }`}
+              >
+                {line}
+              </h2>
+            ))}
+          </div>
 
-      <Card className="relative z-10 container mx-auto px-6 border-0 bg-transparent max-w-4xl text-center">
-        <CardContent className="p-0 space-y-12">
-          <Card className="bg-transparent border-0 space-y-6">
-            <CardContent className="p-0 text-7xl md:text-8xl lg:text-9xl font-black leading-[0.9] tracking-tight text-white">
-              Every day without
-            </CardContent>
-            <CardContent className="p-0 text-7xl md:text-8xl lg:text-9xl font-black leading-[0.9] tracking-tight">
-              <Badge variant="outline" className="border-0 p-0 text-inherit bg-gradient-to-r from-cyber-blue to-cyber-purple bg-clip-text text-transparent">
-                clarity is a risk.
-              </Badge>
-            </CardContent>
-          </Card>
+          <p className="text-white/35 text-lg max-w-md leading-relaxed">
+            {ctaContent.subheadline}
+          </p>
 
-          <CardContent className="p-0 text-xl text-gray-400 font-light tracking-wide max-w-xl mx-auto">
-            DART access is invite-only and personally granted to your TradingView account.
-          </CardContent>
-
-          <Button size="lg" className="gradient-border bg-white/5 backdrop-blur-xl text-white font-semibold text-lg px-12 py-8 rounded-full gap-3 hover:bg-white/10 transition-all duration-500">
-            Get Invite-Only Access Today
-            <ArrowRight className="w-5 h-5" />
-          </Button>
-
-          <Card className="flex items-center justify-center gap-3 bg-transparent border-0">
-            <Shield className="w-4 h-4 text-cyber-green" />
-            <CardContent className="p-0 text-sm text-gray-500">7-DAY REFUND WINDOW</CardContent>
-          </Card>
-        </CardContent>
-      </Card>
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
+            <Link to="/#access">
+              <Button
+                size="lg"
+                className="bg-white text-black hover:bg-white/90 text-[11px] tracking-[0.22em] uppercase font-semibold px-10 h-12 rounded-none"
+              >
+                {ctaContent.cta.label}
+              </Button>
+            </Link>
+            <span className="text-white/20 text-xs tracking-[0.15em] uppercase">
+              {ctaContent.refund}
+            </span>
+          </div>
+        </motion.div>
+      </div>
     </section>
   )
 }

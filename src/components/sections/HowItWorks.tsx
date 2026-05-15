@@ -1,51 +1,46 @@
-import { Card, CardContent } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { UserPlus, CreditCard, AtSign, TrendingUp } from 'lucide-react'
-
-const steps = [
-  { icon: UserPlus, step: '01', title: 'Create Account', desc: 'Sign up in 60 seconds.' },
-  { icon: CreditCard, step: '02', title: 'Choose Plan', desc: 'Starter, Pro, or Lifetime.' },
-  { icon: AtSign, step: '03', title: 'Submit Username', desc: 'Your TradingView handle.' },
-  { icon: TrendingUp, step: '04', title: 'Start Trading', desc: 'Access granted same day.' },
-]
+import { motion } from 'framer-motion'
+import { steps } from '@/data/howItWorks'
 
 export default function HowItWorks() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      <Card className="absolute inset-0 z-0 border-0 rounded-none bg-transparent" data-react-bits="Waves" />
+    <section id="access" className="py-32 border-b border-white/[0.06]">
+      <div className="container mx-auto px-6 max-w-6xl">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-10%' }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-20"
+        >
+          <span className="text-[10px] tracking-[0.3em] uppercase text-white/25 mb-5 block">
+            Getting Started
+          </span>
+          <h2 className="text-[clamp(40px,6vw,88px)] font-bold tracking-[-0.04em] text-white leading-[0.95]">
+            Live in under
+            <br />
+            <span className="text-white/25">10 minutes.</span>
+          </h2>
+        </motion.div>
 
-      <Card className="relative z-10 container mx-auto px-6 border-0 bg-transparent">
-        <CardContent className="p-0 max-w-5xl mx-auto space-y-16">
-          <Card className="bg-transparent border-0 text-center space-y-4">
-            <CardContent className="p-0 text-7xl md:text-8xl font-black text-white leading-tight">
-              Live in under
-            </CardContent>
-            <CardContent className="p-0 text-7xl md:text-8xl font-black leading-tight">
-              <Badge variant="outline" className="border-0 p-0 text-inherit bg-gradient-to-r from-cyber-blue to-cyber-purple bg-clip-text text-transparent">
-                10 minutes.
-              </Badge>
-            </CardContent>
-          </Card>
-
-          <Card className="grid md:grid-cols-4 gap-4 bg-transparent border-0">
-            {steps.map((step) => {
-              const IconComponent = step.icon
-              return (
-                <Card key={step.step} className="glass-card border-0 text-center p-8 space-y-5">
-                  <Badge variant="outline" className="border-cyber-blue/30 text-cyber-blue text-3xl font-black font-mono px-4 py-1">
-                    {step.step}
-                  </Badge>
-                  <Card className="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center mx-auto border-0">
-                    <IconComponent className="w-8 h-8 text-cyber-blue" />
-                  </Card>
-                  <CardContent className="p-0 text-lg font-bold text-white">{step.title}</CardContent>
-                  <CardContent className="p-0 text-sm text-gray-500">{step.desc}</CardContent>
-                </Card>
-              )
-            })}
-          </Card>
-        </CardContent>
-      </Card>
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-px bg-white/[0.06]">
+          {steps.map((step, i) => (
+            <motion.div
+              key={step.number}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-8%' }}
+              transition={{ duration: 0.65, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="bg-[#080808] p-10 space-y-6"
+            >
+              <span className="text-[clamp(48px,5vw,72px)] font-bold tracking-[-0.04em] text-white/[0.06] leading-none block">
+                {step.number}
+              </span>
+              <h3 className="text-white font-semibold text-base">{step.title}</h3>
+              <p className="text-white/35 text-sm leading-relaxed">{step.description}</p>
+            </motion.div>
+          ))}
+        </div>
+      </div>
     </section>
   )
 }
