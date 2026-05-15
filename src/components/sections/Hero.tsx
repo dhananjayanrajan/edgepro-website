@@ -1,56 +1,41 @@
-import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { Play, ArrowRight } from 'lucide-react'
-import MatrixRain from '@/animations/MatrixRain'
-import TickerTape from '@/animations/TickerTape'
+import { Card, CardContent } from '@/components/ui/card'
+import { ArrowRight } from 'lucide-react'
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex flex-col justify-center overflow-hidden">
-      <MatrixRain />
-      <Card className="absolute inset-0 bg-gradient-to-b from-cyber-dark/50 via-transparent to-cyber-dark border-0 rounded-none" />
-      <Card className="relative z-10 flex-1 flex items-center bg-transparent border-0">
-        <CardContent className="container mx-auto px-6 pt-32 pb-20 p-0">
-          <Card className="text-center max-w-5xl mx-auto bg-transparent border-0 space-y-8">
-            <Badge variant="outline" className="border-cyber-green text-cyber-green px-4 py-2 text-sm gap-2">
-              <Card className="w-2 h-2 rounded-full bg-cyber-green animate-pulse border-0" />
-              LIVE ACCESS OPEN
-            </Badge>
-            <Badge variant="outline" className="border-0 text-cyber-blue text-sm tracking-widest">
-              DART BIAS ENGINE · INVITE-ONLY
-            </Badge>
-            <CardContent className="p-0 text-5xl md:text-7xl lg:text-8xl font-bold leading-tight">
-              <Badge variant="outline" className="border-0 p-0 text-5xl md:text-7xl lg:text-8xl font-bold bg-gradient-to-r from-cyber-blue via-cyber-purple to-cyber-pink bg-clip-text text-transparent">
-                Know the Active Market Bias Before You Trade.
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <Card className="absolute inset-0 z-0 border-0 rounded-none bg-transparent" data-react-bits="Hyperspeed" />
+
+      <Card className="relative z-10 container mx-auto px-6 border-0 bg-transparent">
+        <CardContent className="p-0 max-w-5xl mx-auto text-center space-y-10">
+          <Badge variant="outline" className="border-cyber-blue/30 text-cyber-blue px-6 py-3 text-sm tracking-[0.3em] rounded-full">
+            INVITE-ONLY ACCESS
+          </Badge>
+
+          <Card className="bg-transparent border-0 space-y-6">
+            <CardContent className="p-0 text-7xl md:text-8xl lg:text-9xl font-black leading-[0.9] tracking-tight">
+              <Badge variant="outline" className="border-0 p-0 text-inherit bg-gradient-to-b from-white via-white to-gray-500 bg-clip-text text-transparent">
+                Market Bias
               </Badge>
             </CardContent>
-            <CardContent className="p-0 text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
-              A private TradingView indicator that converts complex multi-timeframe market pressure into one clean output: bullish, bearish, or about to flip.
+            <CardContent className="p-0 text-7xl md:text-8xl lg:text-9xl font-black leading-[0.9] tracking-tight">
+              <Badge variant="outline" className="border-0 p-0 text-inherit bg-gradient-to-r from-cyber-blue to-cyber-purple bg-clip-text text-transparent">
+                Before You Trade
+              </Badge>
             </CardContent>
-            <CardContent className="p-0 text-cyber-green text-sm">1,254 traders analysing the bias right now</CardContent>
-            <Card className="flex flex-col sm:flex-row items-center justify-center gap-4 bg-transparent border-0">
-              <Button size="lg" className="gradient-border bg-cyber-blue/20 backdrop-blur-sm text-white font-bold text-lg gap-2">
-                <Play className="w-5 h-5" />
-                Watch It Work
-              </Button>
-              <Button variant="outline" size="lg" className="glass-card text-cyber-blue font-bold text-lg gap-2">
-                Get Access
-                <ArrowRight className="w-5 h-5" />
-              </Button>
-            </Card>
-            <Card className="flex items-center justify-center gap-6 bg-transparent border-0">
-              <Badge variant="outline" className="border-0 text-sm text-gray-500">$49 Starting plan</Badge>
-              <Card className="w-1 h-1 rounded-full bg-gray-600 border-0" />
-              <Badge variant="outline" className="border-0 text-sm text-gray-500">7 Days Refund window</Badge>
-              <Card className="w-1 h-1 rounded-full bg-gray-600 border-0" />
-              <Badge variant="outline" className="border-0 text-sm text-gray-500">&lt;24h Access granted</Badge>
-            </Card>
           </Card>
+
+          <CardContent className="p-0 text-xl text-gray-400 max-w-2xl mx-auto font-light tracking-wide">
+            One clean output. Bullish. Bearish. Or about to flip.
+          </CardContent>
+
+          <Button size="lg" className="gradient-border bg-white/5 backdrop-blur-xl text-white font-semibold text-lg px-10 py-8 rounded-full gap-3 hover:bg-white/10 transition-all duration-500">
+            Get Early Access
+            <ArrowRight className="w-5 h-5" />
+          </Button>
         </CardContent>
-      </Card>
-      <Card className="relative z-10 bg-transparent border-0">
-        <TickerTape />
       </Card>
     </section>
   )

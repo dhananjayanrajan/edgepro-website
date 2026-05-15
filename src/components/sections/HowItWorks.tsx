@@ -1,42 +1,46 @@
-import { Card, CardContent, CardTitle } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { UserPlus, CreditCard, AtSign, TrendingUp } from 'lucide-react'
-import ScrollReveal from '@/animations/ScrollReveal'
-import SectionHeading from '@/components/shared/SectionHeading'
 
 const steps = [
-  { icon: UserPlus, time: '~1 MIN', title: 'Create Account', description: 'Sign up on EdgePro in 60 seconds.' },
-  { icon: CreditCard, time: '~1 MIN', title: 'Choose a Plan', description: 'Starter, Pro, or Lifetime Founders.' },
-  { icon: AtSign, time: '~1 MIN', title: 'Submit TV Username', description: 'Enter your TradingView username.' },
-  { icon: TrendingUp, time: 'SAME DAY', title: 'Start Trading', description: 'Find DART in Invite-Only Scripts.' },
+  { icon: UserPlus, step: '01', title: 'Create Account', desc: 'Sign up in 60 seconds.' },
+  { icon: CreditCard, step: '02', title: 'Choose Plan', desc: 'Starter, Pro, or Lifetime.' },
+  { icon: AtSign, step: '03', title: 'Submit Username', desc: 'Your TradingView handle.' },
+  { icon: TrendingUp, step: '04', title: 'Start Trading', desc: 'Access granted same day.' },
 ]
 
 export default function HowItWorks() {
   return (
-    <section className="relative py-24">
-      <Card className="container mx-auto px-6 bg-transparent border-0">
-        <CardContent className="p-0 space-y-12">
-          <ScrollReveal>
-            <SectionHeading title="Getting Access" subtitle="Live on TradingView in under 10 minutes." />
-          </ScrollReveal>
-          <Card className="grid md:grid-cols-4 gap-6 max-w-4xl mx-auto bg-transparent border-0">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <Card className="absolute inset-0 z-0 border-0 rounded-none bg-transparent" data-react-bits="Waves" />
+
+      <Card className="relative z-10 container mx-auto px-6 border-0 bg-transparent">
+        <CardContent className="p-0 max-w-5xl mx-auto space-y-16">
+          <Card className="bg-transparent border-0 text-center space-y-4">
+            <CardContent className="p-0 text-7xl md:text-8xl font-black text-white leading-tight">
+              Live in under
+            </CardContent>
+            <CardContent className="p-0 text-7xl md:text-8xl font-black leading-tight">
+              <Badge variant="outline" className="border-0 p-0 text-inherit bg-gradient-to-r from-cyber-blue to-cyber-purple bg-clip-text text-transparent">
+                10 minutes.
+              </Badge>
+            </CardContent>
+          </Card>
+
+          <Card className="grid md:grid-cols-4 gap-4 bg-transparent border-0">
             {steps.map((step) => {
               const IconComponent = step.icon
               return (
-                <ScrollReveal key={step.title}>
-                  <Card className="glass-card border-0 text-center">
-                    <CardContent className="p-6 space-y-4">
-                      <Card className="w-16 h-16 rounded-full glass-card flex items-center justify-center mx-auto bg-transparent border-0">
-                        <IconComponent className="w-7 h-7 text-cyber-blue" />
-                      </Card>
-                      <Badge variant="outline" className="border-cyber-blue text-cyber-blue">{step.time}</Badge>
-                      <CardTitle className="font-semibold text-white">{step.title}</CardTitle>
-                      <Card className="bg-transparent border-0">
-                        <CardContent className="p-0 text-sm text-gray-400">{step.description}</CardContent>
-                      </Card>
-                    </CardContent>
+                <Card key={step.step} className="glass-card border-0 text-center p-8 space-y-5">
+                  <Badge variant="outline" className="border-cyber-blue/30 text-cyber-blue text-3xl font-black font-mono px-4 py-1">
+                    {step.step}
+                  </Badge>
+                  <Card className="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center mx-auto border-0">
+                    <IconComponent className="w-8 h-8 text-cyber-blue" />
                   </Card>
-                </ScrollReveal>
+                  <CardContent className="p-0 text-lg font-bold text-white">{step.title}</CardContent>
+                  <CardContent className="p-0 text-sm text-gray-500">{step.desc}</CardContent>
+                </Card>
               )
             })}
           </Card>
